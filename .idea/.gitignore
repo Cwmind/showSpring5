@@ -1,8 +1,24 @@
 # 默认忽略的文件
 /shelf/
 /workspace.xml
+
 # 基于编辑器的 HTTP 客户端请求
 /httpRequests/
+
 # Datasource local storage ignored files
 /dataSources/
 /dataSources.local.xml
+
+# 忽略所有文件和目录
+/*
+!.gitignore
+
+# 但保留 src 目录
+!/src/
+
+# 在 src 目录下，只保留 main 目录
+/src/*
+!/src/main/
+
+# 保留 src/main 目录下的所有内容
+!/src/main/**
