@@ -37,6 +37,7 @@ public class TestBeanFactory {
                 .sorted(beanFactory.getDependencyComparator())
                 .forEach(beanPostProcessor -> {
             System.out.println(">>>>" + beanPostProcessor);
+            //对于每个beanPostProcessor，将他添加到beanFactory里
             beanFactory.addBeanPostProcessor(beanPostProcessor);
         });
 

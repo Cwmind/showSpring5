@@ -26,7 +26,7 @@ public class A04 {
 
         context.registerBean(CommonAnnotationBeanPostProcessor.class); // @Resource @PostConstruct @PreDestroy
 
-        ConfigurationPropertiesBindingPostProcessor.register(context.getDefaultListableBeanFactory());
+        ConfigurationPropertiesBindingPostProcessor.register(context.getDefaultListableBeanFactory()); //@ConfigurationProperties
 
         // ⬇️初始化容器
         context.refresh(); // 执行beanFactory后处理器, 添加bean后处理器, 初始化所有单例

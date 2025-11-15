@@ -21,10 +21,10 @@ public class A02 {
     private static final Logger log = LoggerFactory.getLogger(A02.class);
 
     public static void main(String[] args) {
-        testClassPathXmlApplicationContext();
+//        testClassPathXmlApplicationContext();
 //        testFileSystemXmlApplicationContext();
 //        testAnnotationConfigApplicationContext();
-//        testAnnotationConfigServletWebServerApplicationContext();
+          testAnnotationConfigServletWebServerApplicationContext();
 
         /*DefaultListableBeanFactory beanFactory = new DefaultListableBeanFactory();
         System.out.println("读取之前...");
@@ -82,6 +82,7 @@ public class A02 {
     }
 
     // ⬇️较为经典的容器, 基于 java 配置类来创建, 用于 web 环境
+    // 是springboot的web应用启动方式，
     private static void testAnnotationConfigServletWebServerApplicationContext() {
         AnnotationConfigServletWebServerApplicationContext context =
                 new AnnotationConfigServletWebServerApplicationContext(WebConfig.class);

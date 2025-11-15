@@ -45,6 +45,8 @@ public class DigInAutowired {
         Object o = beanFactory.doResolveDependency(dd1, null, null, null);
         System.out.println(o);
 
+        //这里是根据方法参数的类型，去容器里找相应的bean，Bean1中有个方法叫做setBean2，加了AutoWired注解，就根据setBean2方法的参数
+        // Bean2 bean2，类型是Bean2，就去容器里找Bean2类型的Bean
         Method setBean2 = Bean1.class.getDeclaredMethod("setBean2", Bean2.class);
         DependencyDescriptor dd2 =
                 new DependencyDescriptor(new MethodParameter(setBean2, 0), true);
