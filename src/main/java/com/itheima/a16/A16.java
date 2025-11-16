@@ -27,7 +27,7 @@ public class A16 {
                 if (annotations.isPresent(Transactional.class)) {
                     return true;
                 }
-                // 查看类上是否加了 Transactional 注解
+                // 查看类上是否加了 Transactional 注解,MergedAnnotations.SearchStrategy.TYPE_HIERARCHY参数是指定搜索策略
                 annotations = MergedAnnotations.from(targetClass, MergedAnnotations.SearchStrategy.TYPE_HIERARCHY);
                 if (annotations.isPresent(Transactional.class)) {
                     return true;

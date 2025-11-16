@@ -25,6 +25,7 @@ public class Proxy extends Target {
             save0 = Target.class.getMethod("save");
             save1 = Target.class.getMethod("save", int.class);
             save2 = Target.class.getMethod("save", long.class);
+            //"()V"代表是无参的，返回值类型是void
             save0Proxy = MethodProxy.create(Target.class, Proxy.class, "()V", "save", "saveSuper");
             save1Proxy = MethodProxy.create(Target.class, Proxy.class, "(I)V", "save", "saveSuper");
             save2Proxy = MethodProxy.create(Target.class, Proxy.class, "(J)V", "save", "saveSuper");

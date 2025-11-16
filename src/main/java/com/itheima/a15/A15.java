@@ -21,6 +21,8 @@ public class A15 {
         // 1. 备好切点
         AspectJExpressionPointcut pointcut = new AspectJExpressionPointcut();
         pointcut.setExpression("execution(* foo())");
+
+
         // 2. 备好通知
         MethodInterceptor advice = invocation -> {
             System.out.println("before...");
@@ -28,6 +30,22 @@ public class A15 {
             System.out.println("after...");
             return result;
         };
+
+//        // 2. 创建方法拦截器（通知），使用匿名内部类替代lambda
+//        MethodInterceptor advice = new MethodInterceptor() {
+//            // 实现invoke方法，定义拦截逻辑
+//            @Override
+//            public Object invoke(MethodInvocation invocation) throws Throwable {
+//                // 前置通知：在目标方法执行前执行
+//                System.out.println("before...");
+//                // 调用目标方法
+//                Object result = invocation.proceed();
+//                // 后置通知：在目标方法执行后执行
+//                System.out.println("after...");
+//                // 返回目标方法的执行结果
+//                return result;
+//            }
+//        };
         // 3. 备好切面
         DefaultPointcutAdvisor advisor = new DefaultPointcutAdvisor(pointcut, advice);
 

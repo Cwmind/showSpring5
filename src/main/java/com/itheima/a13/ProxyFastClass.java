@@ -15,6 +15,9 @@ public class ProxyFastClass {
             saveSuper(long)          2
         signature 包括方法名字、参数返回值
      */
+    // save0Proxy = MethodProxy.create(Target.class, Proxy.class, "()V", "save", "saveSuper");
+    //这里"()V", "save"这两个参数加起来就是signature的信息
+    //MethodProxy.create，创建的就是 ProxyFastClass这个对象
     public int getIndex(Signature signature) {
         if (s0.equals(signature)) {
             return 0;
@@ -27,6 +30,7 @@ public class ProxyFastClass {
     }
 
     // 根据方法编号, 正常调用目标对象方法
+    // methodProxy.invoke(target, args); 我们在使用methodProxy时，目标会被传过来
     public Object invoke(int index, Object proxy, Object[] args) {
         if (index == 0) {
             ((Proxy) proxy).saveSuper();
