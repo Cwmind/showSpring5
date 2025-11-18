@@ -41,7 +41,7 @@ public class A41_1 {
             return new Bean1("本项目");
         }
     }
-
+    //DeferredImportSelector 该接口推迟import
     static class MyImportSelector implements DeferredImportSelector {
         @Override
         public String[] selectImports(AnnotationMetadata importingClassMetadata) {

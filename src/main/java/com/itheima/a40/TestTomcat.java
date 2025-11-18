@@ -90,6 +90,7 @@ public class TestTomcat {
 
     public static WebApplicationContext getApplicationContext() {
 //        AnnotationConfigServletWebServerApplicationContext
+        //下面的实现没有内嵌的tomcat
         AnnotationConfigWebApplicationContext context = new AnnotationConfigWebApplicationContext();
         context.register(Config.class);
         context.refresh();
