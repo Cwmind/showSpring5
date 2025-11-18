@@ -62,7 +62,7 @@ import java.util.stream.Collectors;
         org.springframework.web.method.annotation.RequestParamMethodArgumentResolver@4e38d975
         org.springframework.web.servlet.mvc.method.annotation.ServletModelAttributeMethodProcessor@35f8a9d3
  */
-public class A21 {
+public class  A21 {
 
     public static void main(String[] args) throws Exception {
         AnnotationConfigApplicationContext context = new AnnotationConfigApplicationContext(WebConfig.class);

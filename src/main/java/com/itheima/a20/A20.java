@@ -29,6 +29,7 @@ public class A20 {
 
         // 获取映射结果
         Map<RequestMappingInfo, HandlerMethod> handlerMethods = handlerMapping.getHandlerMethods();
+        System.out.println(">>>>>>>>>>>>>>>>>>>>>");
         handlerMethods.forEach((k, v) -> {
             System.out.println(k + "=" + v);
         });

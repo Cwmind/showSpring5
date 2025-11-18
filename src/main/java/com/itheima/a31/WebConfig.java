@@ -26,6 +26,10 @@ public class WebConfig {
     public ExceptionHandlerExceptionResolver resolver() {
         ExceptionHandlerExceptionResolver resolver = new ExceptionHandlerExceptionResolver();
         resolver.setMessageConverters(List.of(new MappingJackson2HttpMessageConverter()));
+        //不再需要这一行，因为
+        //public class ExceptionHandlerExceptionResolver extends AbstractHandlerMethodExceptionResolver implements ApplicationContextAware, InitializingBean
+        //ExceptionHandlerExceptionResolver被容器管理后，它会自己回调 InitializingBean ，完成resolver.afterPropertiesSet()的工作
+        //resolver.afterPropertiesSet();
         return resolver;
     }
 }

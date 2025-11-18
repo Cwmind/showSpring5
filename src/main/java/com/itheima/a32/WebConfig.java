@@ -41,7 +41,7 @@ public class WebConfig {
         return new DispatcherServlet();
     }
 
-    @Bean
+    @Bean //把DispatcherServlet注册到tomcat里
     public DispatcherServletRegistrationBean servletRegistrationBean(DispatcherServlet dispatcherServlet) {
         DispatcherServletRegistrationBean registrationBean = new DispatcherServletRegistrationBean(dispatcherServlet, "/");
         registrationBean.setLoadOnStartup(1);
@@ -53,7 +53,9 @@ public class WebConfig {
         return new RequestMappingHandlerMapping();
     }
 
-    @Bean // 注意默认的 RequestMappingHandlerAdapter 不会带 jackson 转换器
+    @Bean // 注意默认的 RequestMappingHandlerAdapter 不会带 jackson 转换器 所以我们自定义了
+
+    //RequestMappingHandlerAdapter是实际的controller里方法的执行者
     public RequestMappingHandlerAdapter requestMappingHandlerAdapter() {
         RequestMappingHandlerAdapter handlerAdapter = new RequestMappingHandlerAdapter();
         handlerAdapter.setMessageConverters(List.of(new MappingJackson2HttpMessageConverter()));
@@ -78,12 +80,12 @@ public class WebConfig {
             return null;
         }
 
-        /*@RequestMapping("/error")
-        @ResponseBody
-        public Map<String, Object> error(HttpServletRequest request) {
-            Throwable e = (Throwable) request.getAttribute(RequestDispatcher.ERROR_EXCEPTION);
-            return Map.of("error", e.getMessage());
-        }*/
+//        @RequestMapping("/error")
+//        @ResponseBody
+//        public Map<String, Object> error(HttpServletRequest request) {
+//            Throwable e = (Throwable) request.getAttribute(RequestDispatcher.ERROR_EXCEPTION);
+//            return Map.of("error", e.getMessage());
+//        }
     }
 
     @Bean
@@ -101,7 +103,7 @@ public class WebConfig {
                 System.out.println(model);
                 response.setContentType("text/html;charset=utf-8");
                 response.getWriter().print("""
-                        <h3>服务器内部错误</h3>
+                        <h3>服务器内部错误111</h3>
                         """);
             }
         };

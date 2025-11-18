@@ -29,7 +29,7 @@ public class WebConfig {
         }
 
         @ResponseStatus(HttpStatus.OK)
-        public ModelAndView foo(@ModelAttribute("u") User user) {
+        public ModelAndView foo(@ModelAttribute("u")User user) {
             System.out.println("foo");
             return null;
         }

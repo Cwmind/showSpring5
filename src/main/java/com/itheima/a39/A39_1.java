@@ -19,6 +19,7 @@ import java.util.Set;
 public class A39_1 {
 
     public static void main(String[] args) throws Exception {
+        //确定配置起点: 为Spring容器提供配置加载的入口点
         System.out.println("1. 演示获取 Bean Definition 源");
         SpringApplication spring = new SpringApplication(A39_1.class);
         spring.setSources(Set.of("classpath:b01.xml"));

@@ -30,9 +30,13 @@ public class A24 {
         AnnotationConfigApplicationContext context =
                 new AnnotationConfigApplicationContext(WebConfig.class);
 
+        //手动创建，避免spring自动创建，会自动执行下面两行代码
         RequestMappingHandlerAdapter handlerAdapter = new RequestMappingHandlerAdapter();
         handlerAdapter.setApplicationContext(context);
         handlerAdapter.afterPropertiesSet();
+        // 上面这个方法， 里面有这么一行，this.initControllerAdviceCache(); 会初始化一部分的InitBinder，只会初始化全局的
+
+
 
         log.debug("1. 刚开始...");
         showBindMethods(handlerAdapter);

@@ -45,7 +45,7 @@ public class A28 {
         ServletWebRequest webRequest = new ServletWebRequest(request, response);
 
         request.addHeader("Accept", "application/xml");
-        response.setContentType("application/json");
+        response.setContentType("application/json");//等效@RequestMapping(produces = "application/json")
 
         RequestResponseBodyMethodProcessor processor = new RequestResponseBodyMethodProcessor(
                 List.of(

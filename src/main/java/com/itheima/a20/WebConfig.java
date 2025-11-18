@@ -48,7 +48,8 @@ public class WebConfig {
         return registrationBean;
     }
 
-    // 如果用 DispatcherServlet 初始化时默认添加的组件, 并不会作为 bean, 给测试带来困扰
+    // 如果用 DispatcherServlet 初始化时默认添加的组件, 并不会作为 bean, 会直接把requestMappingHandlerMapping
+    // 当作DispatcherServlet的成员变量，给测试带来困扰
     // ⬅️1. 加入RequestMappingHandlerMapping
     @Bean
     public RequestMappingHandlerMapping requestMappingHandlerMapping() {

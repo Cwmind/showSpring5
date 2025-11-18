@@ -21,11 +21,30 @@ import java.util.Map;
 public class A30 {
     public static void main(String[] args) throws NoSuchMethodException {
         ExceptionHandlerExceptionResolver resolver = new ExceptionHandlerExceptionResolver();
+        // 添加消息转换器
         resolver.setMessageConverters(List.of(new MappingJackson2HttpMessageConverter()));
+        // 添加参数处理器，返回值处理器
         resolver.afterPropertiesSet();
 
         MockHttpServletRequest request = new MockHttpServletRequest();
         MockHttpServletResponse response = new MockHttpServletResponse();
+
+
+        // 4.测试异常处理方法参数解析
+        // 通过handlerMethod，直到你这个异常在那个类里触发的
+        // 在类里面找有没有@ExceptionHandler标注的方法，有的话，比较参数里的异常类型和我们实际发生的异常类型，相同的话说明这个方法可以处理这个异常
+        HandlerMethod handlerMethod = new HandlerMethod(new Controller4(), Controller4.class.getMethod("foo"));
+        Exception e = new Exception("e1");
+        // 反射调用这个异常处理方法
+        resolver.resolveException(request, response, handlerMethod, e);
+        System.out.println(new String(response.getContentAsByteArray(), StandardCharsets.UTF_8));
+        /*
+            学到了什么
+                a. ExceptionHandlerExceptionResolver 能够重用参数解析器、返回值处理器，实现组件重用
+                b. 能够支持嵌套异常
+         */
+
+
         // 1.测试 json
 //        HandlerMethod handlerMethod = new HandlerMethod(new Controller1(), Controller1.class.getMethod("foo"));
 //        Exception e = new ArithmeticException("被零除");
@@ -42,17 +61,6 @@ public class A30 {
 //        Exception e = new Exception("e1", new RuntimeException("e2", new IOException("e3")));
 //        resolver.resolveException(request, response, handlerMethod, e);
 //        System.out.println(new String(response.getContentAsByteArray(), StandardCharsets.UTF_8));
-
-        // 4.测试异常处理方法参数解析
-        HandlerMethod handlerMethod = new HandlerMethod(new Controller4(), Controller4.class.getMethod("foo"));
-        Exception e = new Exception("e1");
-        resolver.resolveException(request, response, handlerMethod, e);
-        System.out.println(new String(response.getContentAsByteArray(), StandardCharsets.UTF_8));
-        /*
-            学到了什么
-                a. ExceptionHandlerExceptionResolver 能够重用参数解析器、返回值处理器，实现组件重用
-                b. 能够支持嵌套异常
-         */
     }
 
     static class Controller1 {

@@ -10,12 +10,14 @@ import javax.servlet.http.HttpServletResponse;
 
 public class YmlReturnValueHandler implements HandlerMethodReturnValueHandler {
     @Override
+    //这个参数MethodParameter会把我们的返回值参数信息传递进来
     public boolean supportsReturnType(MethodParameter returnType) {
         Yml yml = returnType.getMethodAnnotation(Yml.class);
         return yml != null;
     }
 
     @Override                   //  返回值
+    //NativeWebRequest webRequest对象，既有原始请求，又有原始响应
     public void handleReturnValue(Object returnValue, MethodParameter returnType,
                                   ModelAndViewContainer mavContainer, NativeWebRequest webRequest) throws Exception {
         // 1. 转换返回结果为 yaml 字符串
