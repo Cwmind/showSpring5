@@ -12,7 +12,7 @@ public class TestAopAuto {
     public static void main(String[] args) {
         GenericApplicationContext context = new GenericApplicationContext();
         StandardEnvironment env = new StandardEnvironment();
-//        env.getPropertySources().addLast(new SimpleCommandLinePropertySource("--spring.aop.auto=true"));
+        env.getPropertySources().addLast(new SimpleCommandLinePropertySource("--spring.aop.auto=false"));
         context.setEnvironment(env);
         AnnotationConfigUtils.registerAnnotationConfigProcessors(context.getDefaultListableBeanFactory());
         context.registerBean(Config.class);
@@ -21,9 +21,9 @@ public class TestAopAuto {
             System.out.println(name);
         }
         System.out.println(">>>>>>>>>>>>>>>");
-        AnnotationAwareAspectJAutoProxyCreator creator = context.getBean(
-                "org.springframework.aop.config.internalAutoProxyCreator", AnnotationAwareAspectJAutoProxyCreator.class);
-        System.out.println(creator.isProxyTargetClass());
+//        AnnotationAwareAspectJAutoProxyCreator creator = context.getBean(
+//                "org.springframework.aop.config.internalAutoProxyCreator", AnnotationAwareAspectJAutoProxyCreator.class);
+//        System.out.println(creator.isProxyTargetClass());
 
     }
 

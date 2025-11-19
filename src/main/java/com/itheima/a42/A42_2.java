@@ -45,6 +45,7 @@ public class A42_2 {
             Map<String, Object> attributes = metadata.getAnnotationAttributes(ConditionalOnClass.class.getName());
             String className = attributes.get("className").toString();
             boolean exists = (boolean) attributes.get("exists");
+            // ClassUtils.isPresent判断classpath下有没有指定的类名
             boolean present = ClassUtils.isPresent(className, null);
             return exists ? present : !present;
         }

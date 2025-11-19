@@ -43,6 +43,10 @@ public class TestDataSourceAuto {
             if (resourceDescription != null)
                 System.out.println(name + " 来源:" + resourceDescription);
         }
+        MyDataSourceAutoConfiguration.PooledSubClass pooled = new MyDataSourceAutoConfiguration.PooledSubClass();
+        Object bean = context.getBean(pooled.getClass().getSuperclass());
+
+        System.out.println(bean);
     }
 
     @Configuration
@@ -62,4 +66,27 @@ public class TestDataSourceAuto {
             };
         }
     }
+
+//    static  class myDataSourceAutoConfiguration extends DataSourceAutoConfiguration {
+//        DataSourceAutoConfiguration.PooledDataSourceConfiguration pooledDataSourceConfiguration
+//                = new DataSourceAutoConfiguration.PooledDataSourceConfiguration();
+//    }
+
+
+
+
+    public class MyDataSourceAutoConfiguration extends DataSourceAutoConfiguration {
+
+        // 定义PooledDataSourceConfiguration的子类（必须是protected或public，且同包/子类可访问）
+        protected static class PooledSubClass extends DataSourceAutoConfiguration.PooledDataSourceConfiguration {
+            // 子类的构造方法可以直接调用父类的protected构造方法
+            public PooledSubClass() {
+                super(); // 此处调用父类的protected构造方法，合法
+            }
+        }
+        // 通过子类实例化（间接拿到PooledDataSourceConfiguration的实例
+    }
+
+
+
 }

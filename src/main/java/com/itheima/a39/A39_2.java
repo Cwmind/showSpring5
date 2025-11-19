@@ -21,8 +21,11 @@ public class A39_2 {
         List<String> names = SpringFactoriesLoader.loadFactoryNames(SpringApplicationRunListener.class, A39_2.class.getClassLoader());
         for (String name : names) {
             System.out.println(name);
+            // 第一行：根据类名字符串动态加载对应的Class对象
             Class<?> clazz = Class.forName(name);
+            // 第二行：获取类的特定参数类型的构造器
             Constructor<?> constructor = clazz.getConstructor(SpringApplication.class, String[].class);
+            // 第三行：使用构造器创建类的实例，并进行类型转换
             SpringApplicationRunListener publisher = (SpringApplicationRunListener) constructor.newInstance(app, args);
 
             // 发布事件

@@ -13,8 +13,11 @@ public class A45 {
     public static void main(String[] args) throws Exception {
         ConfigurableApplicationContext context = SpringApplication.run(A45.class, args);
 
+        System.out.println(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>");
         Bean1 proxy = context.getBean(Bean1.class);
-
+        System.out.println(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>");
+        proxy.setBean2(new Bean2());
+        proxy.init();
 
 
         /*
@@ -35,7 +38,7 @@ public class A45 {
         proxy.m1();
         proxy.m2();
         proxy.m3();
-        Method m4 = Bean1.class.getDeclaredMethod("m1");
+        Method m4 = Bean1.class.getDeclaredMethod("m4");
         m4.setAccessible(true);
         m4.invoke(proxy);
 

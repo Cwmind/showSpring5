@@ -48,7 +48,7 @@ public class A47_1 {
                     return beanFactory.doResolveDependency(dd4, "bean1", null, null);
                 }
             };
-            System.out.println(objectFactory.getObject());
+            System.out.println(objectFactory.getObject()+"5555555");
         }
         System.out.println(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>");
         // 5. 对 @Lazy 的处理
@@ -78,9 +78,9 @@ public class A47_1 {
 
     @Component("bean2")
     static class Bean2 {
-        /*@Override
+        @Override
         public String toString() {
             return super.toString();
-        }*/
+        }
     }
 }
