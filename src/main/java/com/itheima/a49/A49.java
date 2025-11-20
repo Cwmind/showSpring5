@@ -28,6 +28,16 @@ public class A49 {
         context.close();
     }
 
+    @Component
+    static class EmailApplicationListener implements ApplicationListener<MyEvent> {
+        private static final Logger log = LoggerFactory.getLogger(EmailApplicationListener.class);
+
+        @Override
+        public void onApplicationEvent(MyEvent event) {
+            log.debug("发送邮件");
+        }
+    }
+
     static class MyEvent extends ApplicationEvent {
         public MyEvent(Object source) {
             super(source);
@@ -57,15 +67,7 @@ public class A49 {
         }
     }
 
-    @Component
-    static class EmailApplicationListener implements ApplicationListener<MyEvent> {
-        private static final Logger log = LoggerFactory.getLogger(EmailApplicationListener.class);
 
-        @Override
-        public void onApplicationEvent(MyEvent event) {
-            log.debug("发送邮件");
-        }
-    }
 
     @Bean
     public ThreadPoolTaskExecutor executor() {
@@ -81,18 +83,18 @@ public class A49 {
         return new AbstractApplicationEventMulticaster() {
             private List<GenericApplicationListener> listeners = new ArrayList<>();
 
-            // 收集监听器
+            // 收集监听器，这个方法会在spring容器初始化时被回调,且不止一次
             public void addApplicationListenerBean(String name) {
                 ApplicationListener listener = context.getBean(name, ApplicationListener.class);
-                System.out.println(listener);
+                System.out.println(listener);System.out.println("123456");
                 // 获取该监听器支持的事件类型
                 ResolvableType type = ResolvableType.forClass(listener.getClass()).getInterfaces()[0].getGeneric();
                 System.out.println(type);
-
                 // 将原始的 listener 封装为支持事件类型检查的 listener
                 GenericApplicationListener genericApplicationListener = new GenericApplicationListener() {
                     // 是否支持某事件类型                真实的事件类型
                     public boolean supportsEventType(ResolvableType eventType) {
+                        //右边能否赋值给左边
                         return type.isAssignableFrom(eventType);
                     }
 
@@ -100,11 +102,10 @@ public class A49 {
                         executor.submit(() -> listener.onApplicationEvent(event));
                     }
                 };
-
                 listeners.add(genericApplicationListener);
             }
 
-            // 发布事件
+            // 发布事件 publisher.publishEvent(new MyEvent("MyService.doBusiness()"))内部就是调这个
             public void multicastEvent(ApplicationEvent event, ResolvableType eventType) {
                 for (GenericApplicationListener listener : listeners) {
                     if (listener.supportsEventType(ResolvableType.forClass(event.getClass()))) {

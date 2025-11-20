@@ -22,13 +22,17 @@ import java.lang.reflect.Method;
 public class A48_3 {
     public static void main(String[] args) {
         AnnotationConfigApplicationContext context = new AnnotationConfigApplicationContext(A48_3.class);
+        System.out.println("2222222222");
         context.getBean(MyService.class).doBusiness();
         context.close();
     }
 
     @Bean
+    //会在所有单例bean初始化后回调里面的方法，只会执行一次
+    //
     public SmartInitializingSingleton smartInitializingSingleton(ConfigurableApplicationContext context) {
         return () -> {
+            System.out.println("1111111111");
             for (String name : context.getBeanDefinitionNames()) {
                 Object bean = context.getBean(name);
                 for (Method method : bean.getClass().getMethods()) {
@@ -50,18 +54,7 @@ public class A48_3 {
         };
     }
 
-    @Component
-    static class MyService {
-        private static final Logger log = LoggerFactory.getLogger(MyService.class);
-        @Autowired
-        private ApplicationEventPublisher publisher; // applicationContext
 
-        public void doBusiness() {
-            log.debug("主线业务");
-            // 主线业务完成后需要做一些支线业务，下面是问题代码
-            publisher.publishEvent(new MyEvent("MyService.doBusiness()"));
-        }
-    }
 
     @Component
     static class SmsService {
@@ -74,6 +67,18 @@ public class A48_3 {
     }
 
     @Component
+    static class MyService {
+        private static final Logger log = LoggerFactory.getLogger(MyService.class);
+        @Autowired
+        private ApplicationEventPublisher publisher; // applicationContext
+
+        public void doBusiness() {
+            log.debug("主线业务");
+            // 主线业务完成后需要做一些支线业务，下面是问题代码
+            publisher.publishEvent(new MyEvent("MyService.doBusiness()"));
+        }
+    }
+    @Component
     static class EmailService {
         private static final Logger log = LoggerFactory.getLogger(EmailService.class);
 
@@ -82,12 +87,10 @@ public class A48_3 {
             log.debug("发送邮件");
         }
     }
-
     @Retention(RetentionPolicy.RUNTIME)
     @Target(ElementType.METHOD)
     @interface MyListener {
     }
-
     static class MyEvent extends ApplicationEvent {
         public MyEvent(Object source) {
             super(source);
